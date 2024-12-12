@@ -6,12 +6,8 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
-import {
-  fetchCityCoordinates,
-  fetchWeatherForGeoLocations,
-  GeoWeatherResponse,
-} from "../api";
-import { staticData } from "../_data";
+import { fetchCityCoordinates, fetchWeatherForGeoLocations } from "../api";
+import { GeoWeatherResponse, staticData } from "../_dataModels";
 import CityItem from "../components/CityItem";
 
 type ListScreenProps = {
@@ -50,7 +46,7 @@ const ListScreen: FC<ListScreenProps> = ({ onLocationSelected }) => {
   if (error) {
     return (
       <View style={styles.centeredContainer}>
-        <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.centeredText}>{error}</Text>
         <Text style={styles.retryText} onPress={getStaticWeather}>
           Tap to Retry
         </Text>
@@ -74,7 +70,7 @@ const ListScreen: FC<ListScreenProps> = ({ onLocationSelected }) => {
               <Text style={styles.loadingText}>Loading weather data...</Text>
             </View>
           ) : (
-            <Text style={styles.emptyListText}>No weather data available</Text>
+            <Text style={styles.centeredText}>No weather data available</Text>
           )
         }
       />
@@ -105,9 +101,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
   },
-  errorText: {
-    color: "#ff4444",
-    fontSize: 18,
+  centeredText: {
+    color: "#ffffff",
+    fontSize: 16,
     textAlign: "center",
   },
   retryText: {
@@ -115,10 +111,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     textDecorationLine: "underline",
-  },
-  emptyListText: {
-    color: "#ffffff",
-    textAlign: "center",
-    fontSize: 16,
   },
 });

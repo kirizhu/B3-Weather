@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { GeoWeatherResponse } from "../api";
+import { GeoWeatherResponse } from "../_dataModels";
 
 type CityItemProps = {
   item: GeoWeatherResponse;
@@ -29,8 +29,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#CDCDE0",
     borderRadius: 8,
     marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
   },
   cityText: {
     fontSize: 18,

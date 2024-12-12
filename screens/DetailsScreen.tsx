@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { GeoWeatherResponse } from "../api";
+
 import CurrentWeather from "../components/CurrentWeather";
 import HourlyForecast from "../components/HourlyForecast";
 import DailyForecast from "../components/DailyForecast";
+import { GeoWeatherResponse } from "../_dataModels";
 
 type DetailsScreenProps = {
   geoWeather: GeoWeatherResponse;
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "500",
   },
 });

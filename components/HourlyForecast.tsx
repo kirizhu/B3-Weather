@@ -1,20 +1,17 @@
 import React, { FC } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
+import { WeatherResponse } from "../_dataModels";
 
-type HourlyForecastProps = {
-  hourly?: Array<{
-    dt: number;
-    temp: number;
-    weather: Array<{ icon: string }>;
-  }>;
+type HourlyProps = {
+  hourly: WeatherResponse["hourly"];
 };
 
-const HourlyForecast: FC<HourlyForecastProps> = ({ hourly }) => {
+const HourlyForecast: FC<HourlyProps> = ({ hourly }) => {
   if (!hourly || hourly.length === 0) {
     return (
       <View style={styles.section}>
         <Text style={styles.title}>Today's Forecast</Text>
-        <Text>No hourly forecast available.</Text>
+        <Text style={styles.text}>No hourly forecast available.</Text>
       </View>
     );
   }
@@ -24,14 +21,16 @@ const HourlyForecast: FC<HourlyForecastProps> = ({ hourly }) => {
       <Text style={styles.title}>Today's Forecast</Text>
       {hourly.slice(0, 12).map((hour, index) => (
         <View key={index} style={styles.row}>
-          <Text>{new Date(hour.dt * 1000).toLocaleTimeString()}</Text>
+          <Text style={styles.text}>
+            {new Date(hour.dt * 1000).toLocaleTimeString()}
+          </Text>
           <Image
             source={{
               uri: `https://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`,
             }}
             style={styles.icon}
           />
-          <Text>{hour.temp}°C</Text>
+          <Text style={styles.text}>{hour.temp}°C</Text>
         </View>
       ))}
     </View>
@@ -51,6 +50,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+  },
+  text: {
+    fontSize: 18,
   },
   row: {
     flexDirection: "row",
