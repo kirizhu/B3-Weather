@@ -40,19 +40,17 @@ npx expo start
 1. Search Functionality
    • Why? Allows users to search for a city rather than being restricted to predefined options.
    • Implementation:
-   • Add an input field to the UI to capture the user query.
-   • Query OpenWeather’s geocoding endpoint to fetch matching city suggestions.
+   • Add an input field to the UI to capture the users input to query the geocoding endpoint to fetch matching city suggestions.
 
 2. Unit and Integration Testing
    • Why? Ensure reliability and robustness of the app.
    • Implementation:
-   • Mock API calls.
    • Use Jest and React Native Testing Library for unit and integration tests.
 
 3. Offline Support
    • Why? Improve user experience in areas with poor connectivity.
    • Implementation:
-   • Cache API responses using libraries like AsyncStorage or MMKV.
+   • Cache API responses using libraries like AsyncStorage or MMKV or without just to limit calls.
 
 4. Accessibility
    • Why? Improve usability for diverse user bases.
