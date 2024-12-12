@@ -2,7 +2,7 @@ import {
   GeoResponse,
   GeoWeatherResponse,
   WeatherResponse,
-} from "./_dataModels";
+} from "../types/types";
 
 const OPEN_WEATHER_API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 const OPEN_WEATHER_BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
