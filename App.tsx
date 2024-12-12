@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import ListScreen from "./screens/ListScreen";
+import DetailsScreen from "./screens/DetailsScreen";
+import { GeoWeatherResponse } from "./api";
 
 export default function App() {
+  const [selectedLocation, setSelectedLocation] =
+    useState<GeoWeatherResponse | null>(null);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar style="light" />
+      {!selectedLocation ? (
+        <ListScreen onLocationSelected={setSelectedLocation} />
+      ) : (
+        <DetailsScreen
+          geoWeather={selectedLocation}
+          goBack={() => setSelectedLocation(null)}
+        />
+      )}
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    backgroundColor: "#161622",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
