@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { GeoWeatherResponse } from "../_dataModels";
+import { GeoWeatherResponse } from "../types/types";
 
 type CityItemProps = {
   item: GeoWeatherResponse;

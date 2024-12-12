@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CurrentWeather from "../components/CurrentWeather";
 import HourlyForecast from "../components/HourlyForecast";
 import DailyForecast from "../components/DailyForecast";
-import { GeoWeatherResponse } from "../_dataModels";
+import { GeoWeatherResponse } from "../types/types";
 
 type DetailsScreenProps = {
   geoWeather: GeoWeatherResponse;

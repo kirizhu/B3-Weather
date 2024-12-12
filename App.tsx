@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListScreen from "./screens/ListScreen";
 import DetailsScreen from "./screens/DetailsScreen";
-import { GeoWeatherResponse } from "./_dataModels";
+import { GeoWeatherResponse } from "./types/types";
 
 export default function App() {
   const [selectedLocation, setSelectedLocation] =

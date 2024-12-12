@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { WeatherResponse } from "../_dataModels";
+import { WeatherResponse } from "../types/types";
 
 type CurrentWeatherProps = {
   name: string;

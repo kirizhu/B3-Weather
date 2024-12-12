@@ -1,11 +1,3 @@
-export const staticData: string[] = [
-  "Stockholm",
-  "New York",
-  "London",
-  "Dubai",
-  "Tokyo",
-];
-
 export type GeoResponse = {
   name: string;
   local_names?: {

@@ -6,9 +6,18 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
-import { fetchCityCoordinates, fetchWeatherForGeoLocations } from "../api";
-import { GeoWeatherResponse, staticData } from "../_dataModels";
+
+import { GeoWeatherResponse } from "../types/types";
 import CityItem from "../components/CityItem";
+import { fetchCityCoordinates, fetchWeatherForGeoLocations } from "../api/api";
+
+const staticData: string[] = [
+  "Stockholm",
+  "New York",
+  "London",
+  "Dubai",
+  "Tokyo",
+];
 
 type ListScreenProps = {
   onLocationSelected: (response: GeoWeatherResponse) => void;
