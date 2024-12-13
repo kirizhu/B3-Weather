@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-import { GeoWeatherResponse } from "../types/types";
+import { GeoResponse, GeoWeatherResponse } from "../types/types";
 import CityItem from "../components/CityItem";
 import { fetchCityCoordinates, fetchWeatherForGeoLocations } from "../api/api";
 
@@ -24,9 +24,10 @@ type ListScreenProps = {
 };
 
 const ListScreen: FC<ListScreenProps> = ({ onLocationSelected }) => {
-  const [staticWeather, setStaticWeather] = useState<
-    GeoWeatherResponse[] | null
-  >(null);
+  const [staticWeather, setStaticWeather] = useState<GeoWeatherResponse[]>([]);
+  const [errors, setErrors] = useState<{ location: string; error: string }[]>(
+    []
+  );
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,11 +35,30 @@ const ListScreen: FC<ListScreenProps> = ({ onLocationSelected }) => {
     try {
       setIsLoading(true);
       setError(null);
+      setErrors([]);
 
-      const geoData = await fetchCityCoordinates(staticData);
-      const weatherData = await fetchWeatherForGeoLocations(geoData);
+      const geoData: (GeoResponse | { error: string } | null)[] =
+        await fetchCityCoordinates(staticData);
 
-      setStaticWeather(weatherData);
+      const validGeoData = geoData.filter(
+        (item): item is GeoResponse => !!item
+      );
+
+      if (validGeoData.length === 0) {
+        throw new Error("No valid locations found");
+      }
+
+      const weatherResults = await fetchWeatherForGeoLocations(validGeoData);
+      const successfulWeather = weatherResults.filter(
+        (result): result is GeoWeatherResponse => !("error" in result)
+      );
+      const errorResults = weatherResults.filter(
+        (result): result is { location: string; error: string } =>
+          "error" in result
+      );
+
+      setStaticWeather(successfulWeather);
+      setErrors(errorResults);
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "An unexpected error occurred"
@@ -52,10 +72,16 @@ const ListScreen: FC<ListScreenProps> = ({ onLocationSelected }) => {
     getStaticWeather();
   }, []);
 
-  if (error) {
+  if (error || errors.length > 0) {
     return (
       <View style={styles.centeredContainer}>
-        <Text style={styles.centeredText}>{error}</Text>
+        {error && <Text style={styles.centeredText}>{error}</Text>}
+        {errors.length > 0 &&
+          errors.map((err, index) => (
+            <Text key={index} style={styles.centeredText}>
+              {err.error}
+            </Text>
+          ))}
         <Text style={styles.retryText} onPress={getStaticWeather}>
           Tap to Retry
         </Text>
@@ -120,5 +146,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     textDecorationLine: "underline",
+  },
+  errorContainer: {
+    marginTop: 20,
+    paddingHorizontal: 16,
+  },
+  errorHeading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "red",
+  },
+  errorText: {
+    fontSize: 14,
+    color: "red",
+    marginTop: 4,
   },
 });
